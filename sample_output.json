@@ -1,0 +1,126 @@
+{
+    "functions": [
+        {
+            "name": "clone_repo",
+            "args": [
+                "repo_url"
+            ],
+            "docstring": null,
+            "body": [
+                "Assign(targets=[Name(id='local_dir', ctx=Store())], value=Call(func=Attribute(value=Attribute(value=Name(id='os', ctx=Load()), attr='path', ctx=Load()), attr='basename', ctx=Load()), args=[Name(id='repo_url', ctx=Load())], keywords=[]))",
+                "If(test=UnaryOp(op=Not(), operand=Call(func=Attribute(value=Attribute(value=Name(id='os', ctx=Load()), attr='path', ctx=Load()), attr='exists', ctx=Load()), args=[Name(id='local_dir', ctx=Load())], keywords=[])), body=[Expr(value=Call(func=Attribute(value=Name(id='subprocess', ctx=Load()), attr='run', ctx=Load()), args=[List(elts=[Constant(value='git'), Constant(value='clone'), Name(id='repo_url', ctx=Load()), Name(id='local_dir', ctx=Load())], ctx=Load())], keywords=[]))], orelse=[])",
+                "Return(value=Name(id='local_dir', ctx=Load()))"
+            ]
+        },
+        {
+            "name": "generate_documentation",
+            "args": [
+                "repo_path"
+            ],
+            "docstring": null,
+            "body": [
+                "Assign(targets=[Name(id='parser', ctx=Store())], value=Call(func=Name(id='PythonCodeParser', ctx=Load()), args=[Name(id='repo_path', ctx=Load())], keywords=[]))",
+                "Assign(targets=[Name(id='parsed_data', ctx=Store())], value=Call(func=Attribute(value=Name(id='parser', ctx=Load()), attr='parse', ctx=Load()), args=[], keywords=[]))",
+                "Assign(targets=[Name(id='llm', ctx=Store())], value=Call(func=Name(id='LLMInterface', ctx=Load()), args=[Name(id='parsed_data', ctx=Load())], keywords=[]))",
+                "Assign(targets=[Name(id='documentation_text', ctx=Store())], value=Call(func=Attribute(value=Name(id='llm', ctx=Load()), attr='generate_text', ctx=Load()), args=[], keywords=[]))",
+                "Assign(targets=[Name(id='assembler', ctx=Store())], value=Call(func=Name(id='DocumentationAssembler', ctx=Load()), args=[Name(id='documentation_text', ctx=Load())], keywords=[]))",
+                "Assign(targets=[Name(id='final_documentation', ctx=Store())], value=Call(func=Attribute(value=Name(id='assembler', ctx=Load()), attr='assemble_documentation', ctx=Load()), args=[], keywords=[]))",
+                "Return(value=Name(id='final_documentation', ctx=Load()))"
+            ]
+        },
+        {
+            "name": "main",
+            "args": [],
+            "docstring": null,
+            "body": [
+                "Expr(value=Call(func=Attribute(value=Name(id='st', ctx=Load()), attr='title', ctx=Load()), args=[Constant(value='Code Repository to Documentation Converter')], keywords=[]))",
+                "Assign(targets=[Name(id='repo_url', ctx=Store())], value=Call(func=Attribute(value=Name(id='st', ctx=Load()), attr='text_input', ctx=Load()), args=[Constant(value='Enter the URL of a Git repository')], keywords=[]))",
+                "If(test=Call(func=Attribute(value=Name(id='st', ctx=Load()), attr='button', ctx=Load()), args=[Constant(value='Generate Documentation')], keywords=[]), body=[If(test=Name(id='repo_url', ctx=Load()), body=[Assign(targets=[Name(id='repo_path', ctx=Store())], value=Call(func=Name(id='clone_repo', ctx=Load()), args=[Name(id='repo_url', ctx=Load())], keywords=[])), Assign(targets=[Name(id='documentation', ctx=Store())], value=Call(func=Name(id='generate_documentation', ctx=Load()), args=[Name(id='repo_path', ctx=Load())], keywords=[])), Expr(value=Call(func=Attribute(value=Name(id='st', ctx=Load()), attr='text_area', ctx=Load()), args=[Constant(value='Generated Documentation'), Name(id='documentation', ctx=Load())], keywords=[keyword(arg='height', value=Constant(value=300))]))], orelse=[Expr(value=Call(func=Attribute(value=Name(id='st', ctx=Load()), attr='error', ctx=Load()), args=[Constant(value='Please enter a valid repository URL.')], keywords=[]))])], orelse=[])"
+            ]
+        }
+    ],
+    "classes": [],
+    "variables": [
+        {
+            "name": "local_dir",
+            "value": "Call(func=Attribute(value=Attribute(value=Name(id='os', ctx=Load()), attr='path', ctx=Load()), attr='basename', ctx=Load()), args=[Name(id='repo_url', ctx=Load())], keywords=[])"        
+        },
+        {
+            "name": "parser",
+            "value": "Call(func=Name(id='PythonCodeParser', ctx=Load()), args=[Name(id='repo_path', ctx=Load())], keywords=[])"
+        },
+        {
+            "name": "parsed_data",
+            "value": "Call(func=Attribute(value=Name(id='parser', ctx=Load()), attr='parse', ctx=Load()), args=[], keywords=[])"
+        },
+        {
+            "name": "llm",
+            "value": "Call(func=Name(id='LLMInterface', ctx=Load()), args=[Name(id='parsed_data', ctx=Load())], keywords=[])"
+        },
+        {
+            "name": "documentation_text",
+            "value": "Call(func=Attribute(value=Name(id='llm', ctx=Load()), attr='generate_text', ctx=Load()), args=[], keywords=[])"
+        },
+        {
+            "name": "assembler",
+            "value": "Call(func=Name(id='DocumentationAssembler', ctx=Load()), args=[Name(id='documentation_text', ctx=Load())], keywords=[])"
+        },
+        {
+            "name": "final_documentation",
+            "value": "Call(func=Attribute(value=Name(id='assembler', ctx=Load()), attr='assemble_documentation', ctx=Load()), args=[], keywords=[])"
+        },
+        {
+            "name": "repo_url",
+            "value": "Call(func=Attribute(value=Name(id='st', ctx=Load()), attr='text_input', ctx=Load()), args=[Constant(value='Enter the URL of a Git repository')], keywords=[])"
+        },
+        {
+            "name": "repo_path",
+            "value": "Call(func=Name(id='clone_repo', ctx=Load()), args=[Name(id='repo_url', ctx=Load())], keywords=[])"
+        },
+        {
+            "name": "documentation",
+            "value": "Call(func=Name(id='generate_documentation', ctx=Load()), args=[Name(id='repo_path', ctx=Load())], keywords=[])"
+        }
+    ],
+    "imports": [
+        [
+            {
+                "name": "streamlit",
+                "alias": "st"
+            }
+        ],
+        [
+            {
+                "name": "os",
+                "alias": null
+            }
+        ],
+        [
+            {
+                "name": "subprocess",
+                "alias": null
+            }
+        ],
+        [
+            {
+                "from": "code_parser",
+                "name": "PythonCodeParser",
+                "alias": null
+            }
+        ],
+        [
+            {
+                "from": "llm_interface",
+                "name": "LLMInterface",
+                "alias": null
+            }
+        ],
+        [
+            {
+                "from": "assembler",
+                "name": "DocumentationAssembler",
+                "alias": null
+            }
+        ]
+    ]
+}
