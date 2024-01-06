@@ -41,4 +41,4 @@ Here are the notable limitations along with a gist of resolution of limitations 
 ## Contribution
 
 I encourage you to contribute to this repository or create issue if you feel so, I am open to feedbacks and suggestion upon how to make this a better and more efficient project.
-For any queries, feel free to reach out at (@SaifSaifee_dev)[https://twitter.com/SaifSaifee_dev]
+For any queries, feel free to reach out at [@SaifSaifee_dev](https://twitter.com/SaifSaifee_dev).
